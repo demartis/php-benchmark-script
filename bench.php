@@ -385,8 +385,19 @@ function get_args($expectedArgs)
 
         parse_str(implode('&', array_filter($cleanedArgs)), $args);
     } else {
+
+        // check if there are any DB config as Wordpress server env style
+        if($_SERVER['MYSQLCONNSTR_']){
+            $args['mysql_host']     = preg_replace("/^.*Data Source=(.+?);.*$/", "\\1", $value);
+            $args['mysql_database'] = preg_replace("/^.*Database=(.+?);.*$/", "\\1", $value);
+            $args['mysql_user']     = preg_replace("/^.*User Id=(.+?);.*$/", "\\1", $value);
+            $args['mysql_password'] = preg_replace("/^.*Password=(.+?)$/", "\\1", $value);
+        }
+
+        // any further Query string will override them
         parse_str($_SERVER['QUERY_STRING'], $args);
     }
+
 
     $args = array_intersect_key($args, array_flip(array_keys($expectedArgs)));
 
