@@ -265,7 +265,7 @@ if (fmod($mtime, 1) === .0000) {
 }
 $now = DateTime::createFromFormat('U.u', $mtime);
 
-$V = '2.0';
+$V = '2.1';
 $isCli = PHP_SAPI === 'cli';
 $lf = $isCli ? PHP_EOL : '<br>';
 $w = 55;
@@ -275,7 +275,8 @@ $currentBenchmark = null;
 
 echo $isCli ? '' : '<pre>';
 printLine('', '', '-');
-printf('|%s|%s', str_pad(sprintf("PHP BENCHMARK SCRIPT v.%s by @SergiX44", $V), $w - 2, ' ', STR_PAD_BOTH), $lf);
+                                            //"PHP BENCHMARK SCRIPT v.%s by @SergiX44"
+printf('|%s|%s', str_pad(sprintf("PHP BENCHMARK SCRIPT v.%s by @DeMartis", $V), $w - 2, ' ', STR_PAD_BOTH), $lf);
 printLine('', '', '-');
 printLine('PHP', PHP_VERSION);
 printLine('Platform', PHP_OS);
@@ -300,7 +301,7 @@ foreach ($setupHooks as $hook) {
     $hook($args);
 }
 
-printLine('', '', '-', STR_PAD_BOTH);
+printLine('PHP Core Benchmarks', '', '-', STR_PAD_BOTH);
 
 $stopwatch = new StopWatch();
 
@@ -320,7 +321,7 @@ if (!empty($additionalBenchmarks)) {
 }
 
 if (!empty($extraLines)) {
-    printLine('Extra', '', '-', STR_PAD_BOTH);
+    printLine('Mysql query speeds', '', '-', STR_PAD_BOTH);
     foreach ($extraLines as $line) {
         printLine($line[0], $line[1]);
     }
